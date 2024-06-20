@@ -14,7 +14,8 @@ REM Initialize counters
 set /a totalFiles=0
 set /a renamedFiles=0
 
-REM First pass: count all applicable files
+REM First pass: count all applicable files and provide feedback
+echo Counting files...
 for /R "%directory%" %%f in (*.*) do (
     REM Get the file extension without the dot
     set "extension=%%~xf"
@@ -33,8 +34,12 @@ for /R "%directory%" %%f in (*.*) do (
     REM If the file extension is not in the exclude list and it is not the script, increment the totalFiles counter
     if "!exclude!"=="no" (
         set /a totalFiles+=1
+        echo Total files found: !totalFiles!
     )
 )
+
+echo Total applicable files: %totalFiles%
+echo Renaming files...
 
 REM Second pass: rename files and update counters
 for /R "%directory%" %%f in (*.*) do (
